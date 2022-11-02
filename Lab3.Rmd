@@ -72,7 +72,6 @@ starwars2
 starwars2<-starwars
 starwars3<- starwars2[which.max(starwars2$height),]
 starwars2<-starwars2[-c(which.max(starwars2$height)),]
-
 starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
 starwars2<-starwars2[-c(which.max(starwars2$height)),]
 starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
