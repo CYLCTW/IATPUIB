@@ -1,0 +1,119 @@
+---
+title: "lab1"
+output: html_document
+date: "2022-10-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+```{r cars}
+summary(cars)
+```
+
+## Настройка
+```{r}
+library(dplyr)
+starwars
+starwars <- starwars
+```
+
+
+## 1. Сколько строк в датафрейме?
+```{r}
+starwars %>% nrow()
+```
+
+## 2. Сколько столбцов в датафрейме?
+```{r}
+starwars %>% ncol()
+```
+
+## 3. Как просмотреть примерный вид датафрейма?
+```{r}
+starwars %>% glimpse()
+```
+
+## 4. Сколько уникальных рас персонажей (species) представлено в данных?
+```{r}
+unique(starwars$species) %>% length()
+```
+
+## 5. Найти самого высокого персонажа.
+```{r}
+starwars[which.max(starwars$height),1]
+
+```
+
+## 6. Найти всех персонажей ниже 170
+```{r}
+starwars[which(starwars$height<170),1]
+```
+
+## 7. Подсчитать ИМТ (индекс массы тела) для всех персонажей. ИМТ подсчитать по формуле 𝐼 = 𝑚/h^2
+ℎ2 , где 𝑚
+– масса (weight), а ℎ – рост (height).
+```{r}
+starwars2<-starwars[,c("name","height","mass")]
+vec<-0
+starwars2$index <- vec
+for(i in 1:nrow(starwars2)) {       # for-loop over columns
+  starwars2[i, "index"] = starwars2[ i,"mass"]*10000/(starwars2[i,"height"]*starwars2[i,"height"])
+}
+starwars2
+
+```
+
+## 8. Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по отношению массы (mass) к росту
+(height) персонажей.
+```{r}
+starwars2<-starwars
+starwars3<- starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
+starwars2<-starwars2[-c(which.max(starwars2$height)),]
+starwars3
+```
+## 9. Найти средний возраст персонажей каждой расы вселенной Звездных войн.
+```{r}
+
+starwars %>%
+  filter(!(birth_year %in% NA)) %>% 
+  filter(!(species %in% NA)) %>%
+  group_by(species) %>%
+  summarise(mean_age = mean(birth_year)) 
+```
+## 10. Найти самый распространенный цвет глаз персонажей вселенной Звездных войн.
+```{r}
+starwars%>%
+count(eye_color,sort=TRUE)%>%
+head(1)
+```
+## 11. Подсчитать среднюю длину имени в каждой расе вселенной Звездных войн.
+```{r}
+starwars %>%
+  filter(!(birth_year %in% NA)) %>% 
+  filter(!(species %in% NA)) %>%
+  group_by(species) %>%
+  summarise(mean_name = mean(nchar(name)))
+```
+
