@@ -1,7 +1,10 @@
 Field ,Type,Description 
 ts ,time ,Timestamp of the DNS request 
 uid ,string,Unique id of the connection 
-id ,record ,ID record with orig/resp host/port. See conn.log 
+orig_id ,string ,ID record with orig/resp host/port. See conn.log 
+resp_id ,count ,ID record with orig/resp host/port. See conn.log
+host_id ,string ,ID record with orig/resp host/port. See conn.log
+port_id ,count ,ID record with orig/resp host/port. See conn.log
 proto ,proto,Protocol of DNS transaction – TCP or UDP 
 trans_id ,count,16 bit identifier assigned by DNS client; responses match 
 query ,string,Domain name subject of the query 
