@@ -1,5 +1,5 @@
 ---
-title: "lab1"
+title: "lab1."
 output: html_document
 date: "2022-10-19"
 ---
@@ -8,7 +8,7 @@ date: "2022-10-19"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown..
+## R Markdown...
 ```{r cars}
 summary(cars)
 ```
@@ -41,7 +41,7 @@ starwars %>% glimpse()
 unique(starwars$species) %>% length()
 ```
 
-## 5. Найти самого высокого персонажа.
+## 5. Найти самого высокого персонажа...
 ```{r}
 starwars[which.max(starwars$height),1]
 
