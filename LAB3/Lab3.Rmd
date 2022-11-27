@@ -36,7 +36,7 @@ starwars %>% ncol()
 starwars %>% glimpse()
 ```
 
-## 4. Сколько уникальных рас персонажей (species) представлено в данных?
+## 4.. Сколько уникальных рас персонажей (species) представлено в данных?
 ```{r}
 unique(starwars$species) %>% length()
 ```
