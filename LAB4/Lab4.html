@@ -10,9 +10,9 @@
 
 
 
-<meta name="date" content="2022-10-19" />
+<meta name="date" content="2022-11-02" />
 
-<title>lab1.</title>
+<title>LAB4</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,25 +349,14 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">lab1.</h1>
-<h4 class="date">2022-10-19</h4>
+<h1 class="title toc-ignore">LAB4</h1>
+<h4 class="date">2022-11-02</h4>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown…</h2>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
-</div>
-<div id="настройка" class="section level2">
-<h2>Настройка</h2>
+<div id="подготовка-данных-1.-импортируйте-данные-dns" class="section level2">
+<h2>Подготовка данных 1. Импортируйте данные DNS</h2>
 <pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
@@ -377,220 +366,339 @@ display: none;
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>starwars</code></pre>
-<pre><code>## # A tibble: 87 × 14
-##    name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##    &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
-##  1 Luke Skywa…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
-##  2 C-3PO          167    75 &lt;NA&gt;    gold    yellow    112   none  mascu… Tatooi…
-##  3 R2-D2           96    32 &lt;NA&gt;    white,… red        33   none  mascu… Naboo  
-##  4 Darth Vader    202   136 none    white   yellow     41.9 male  mascu… Tatooi…
-##  5 Leia Organa    150    49 brown   light   brown      19   fema… femin… Aldera…
-##  6 Owen Lars      178   120 brown,… light   blue       52   male  mascu… Tatooi…
-##  7 Beru White…    165    75 brown   light   blue       47   fema… femin… Tatooi…
-##  8 R5-D4           97    32 &lt;NA&gt;    white,… red        NA   none  mascu… Tatooi…
-##  9 Biggs Dark…    183    84 black   light   brown      24   male  mascu… Tatooi…
-## 10 Obi-Wan Ke…    182    77 auburn… fair    blue-g…    57   male  mascu… Stewjon
-## # … with 77 more rows, 4 more variables: species &lt;chr&gt;, films &lt;list&gt;,
-## #   vehicles &lt;list&gt;, starships &lt;list&gt;, and abbreviated variable names
-## #   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
-<pre class="r"><code>starwars &lt;- starwars</code></pre>
+<pre class="r"><code>inf = read.csv(&quot;dns.log&quot;, header = FALSE,sep = &quot;\t&quot;,encoding = &quot;UTF-8&quot;)</code></pre>
 </div>
-<div id="сколько-строк-в-датафрейме" class="section level2">
-<h2>1. Сколько строк в датафрейме?</h2>
-<pre class="r"><code>starwars %&gt;% nrow()</code></pre>
-<pre><code>## [1] 87</code></pre>
+<div id="добавьте-пропущенные-данные-о-структуре-данных-назначении-столбцов" class="section level2">
+<h2>2. Добавьте пропущенные данные о структуре данных (назначении
+столбцов)</h2>
+<pre class="r"><code>head=read.csv(&quot;header.csv&quot;, header = TRUE)
+field&lt;-head[,1]
+inf = read.csv(&quot;dns.log&quot;, header = FALSE,sep = &quot;\t&quot;,encoding = &quot;UTF-8&quot;)
+names(inf)&lt;-field</code></pre>
 </div>
-<div id="сколько-столбцов-в-датафрейме" class="section level2">
-<h2>2. Сколько столбцов в датафрейме?</h2>
-<pre class="r"><code>starwars %&gt;% ncol()</code></pre>
-<pre><code>## [1] 14</code></pre>
+<div id="преобразуйте-данные-в-столбцах-в-нужный-формат" class="section level2">
+<h2>3. Преобразуйте данные в столбцах в нужный формат</h2>
 </div>
-<div id="как-просмотреть-примерный-вид-датафрейма" class="section level2">
-<h2>3. Как просмотреть примерный вид датафрейма?</h2>
-<pre class="r"><code>starwars %&gt;% glimpse()</code></pre>
-<pre><code>## Rows: 87
-## Columns: 14
-## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Or…
-## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2…
-## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.…
-## $ hair_color &lt;chr&gt; &quot;blond&quot;, NA, NA, &quot;none&quot;, &quot;brown&quot;, &quot;brown, grey&quot;, &quot;brown&quot;, N…
-## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;, &quot;…
-## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blue&quot;,…
-## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0, …
-## $ sex        &lt;chr&gt; &quot;male&quot;, &quot;none&quot;, &quot;none&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;,…
-## $ gender     &lt;chr&gt; &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;femini…
-## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;, &quot;T…
-## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Huma…
-## $ films      &lt;list&gt; &lt;&quot;The Empire Strikes Back&quot;, &quot;Revenge of the Sith&quot;, &quot;Return…
-## $ vehicles   &lt;list&gt; &lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, &quot;Imp…
-## $ starships  &lt;list&gt; &lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced x1&quot;,…</code></pre>
+<div id="анализ-4.-сколько-участников-информационного-обмена-в-сети-доброй-организации" class="section level2">
+<h2>Анализ 4. Сколько участников информационного обмена в сети Доброй
+Организации?</h2>
+<pre class="r"><code>orig_ip&lt;-unique(inf$`orig_ip `)
+orig_ip</code></pre>
+<pre><code>##   [1] &quot;192.168.202.100&quot;                     
+##   [2] &quot;192.168.202.76&quot;                      
+##   [3] &quot;192.168.202.89&quot;                      
+##   [4] &quot;192.168.202.85&quot;                      
+##   [5] &quot;192.168.202.102&quot;                     
+##   [6] &quot;192.168.202.93&quot;                      
+##   [7] &quot;192.168.202.97&quot;                      
+##   [8] &quot;fe80::ba8d:12ff:fe53:a8d8&quot;           
+##   [9] &quot;192.168.202.71&quot;                      
+##  [10] &quot;192.168.202.77&quot;                      
+##  [11] &quot;2001:dbb:c18:202:f2de:f1ff:fe9b:ad6a&quot;
+##  [12] &quot;192.168.202.79&quot;                      
+##  [13] &quot;192.168.202.87&quot;                      
+##  [14] &quot;192.168.204.69&quot;                      
+##  [15] &quot;192.168.202.65&quot;                      
+##  [16] &quot;192.168.202.94&quot;                      
+##  [17] &quot;fe80::223:dfff:fe97:4e12&quot;            
+##  [18] &quot;192.168.202.80&quot;                      
+##  [19] &quot;fe80::c62c:3ff:fe37:efc&quot;             
+##  [20] &quot;192.168.202.88&quot;                      
+##  [21] &quot;192.168.202.84&quot;                      
+##  [22] &quot;192.168.204.59&quot;                      
+##  [23] &quot;192.168.202.92&quot;                      
+##  [24] &quot;fe80::3e07:54ff:fe1c:a665&quot;           
+##  [25] &quot;192.168.202.78&quot;                      
+##  [26] &quot;192.168.207.4&quot;                       
+##  [27] &quot;192.168.205.253&quot;                     
+##  [28] &quot;2001:dbb:c18:202:20c:29ff:fe78:1023&quot; 
+##  [29] &quot;192.168.202.103&quot;                     
+##  [30] &quot;fe80::c62c:3ff:fe30:7333&quot;            
+##  [31] &quot;fe80::4172:3555:4717:3e0c&quot;           
+##  [32] &quot;192.168.203.61&quot;                      
+##  [33] &quot;192.168.202.95&quot;                      
+##  [34] &quot;192.168.204.70&quot;                      
+##  [35] &quot;192.168.202.90&quot;                      
+##  [36] &quot;192.168.203.62&quot;                      
+##  [37] &quot;192.168.204.60&quot;                      
+##  [38] &quot;192.168.202.83&quot;                      
+##  [39] &quot;fe80::4c3a:e571:4cfc:b70c&quot;           
+##  [40] &quot;2001:dbb:c18:202:b9ac:6976:ae1c:e10b&quot;
+##  [41] &quot;192.168.202.75&quot;                      
+##  [42] &quot;192.168.202.101&quot;                     
+##  [43] &quot;2001:dbb:c18:203:226:18ff:fef9:be98&quot; 
+##  [44] &quot;192.168.202.106&quot;                     
+##  [45] &quot;fe80::a800:4ff:fe00:a04&quot;             
+##  [46] &quot;2001:dbb:c18:202:a800:4ff:fe00:a04&quot;  
+##  [47] &quot;fe80::d69a:20ff:fef9:b49c&quot;           
+##  [48] &quot;fe80::f2de:f1ff:fe9b:ad6a&quot;           
+##  [49] &quot;192.168.202.107&quot;                     
+##  [50] &quot;2001:dbb:c18:204:a800:4ff:fe00:a04&quot;  
+##  [51] &quot;192.168.202.110&quot;                     
+##  [52] &quot;2001:dbb:c18:202:71f3:e219:3f6a:4311&quot;
+##  [53] &quot;192.168.202.108&quot;                     
+##  [54] &quot;192.168.202.96&quot;                      
+##  [55] &quot;192.168.202.73&quot;                      
+##  [56] &quot;192.168.202.112&quot;                     
+##  [57] &quot;192.168.202.86&quot;                      
+##  [58] &quot;fe80::62fb:42ff:feef:5440&quot;           
+##  [59] &quot;192.168.28.103&quot;                      
+##  [60] &quot;fe80::4c9b:aad8:8a6a:7bb0&quot;           
+##  [61] &quot;192.168.202.113&quot;                     
+##  [62] &quot;192.168.202.91&quot;                      
+##  [63] &quot;fe80::65ca:c6cd:7ae0:ac8c&quot;           
+##  [64] &quot;192.168.204.45&quot;                      
+##  [65] &quot;192.168.203.45&quot;                      
+##  [66] &quot;192.168.21.152&quot;                      
+##  [67] &quot;192.168.21.103&quot;                      
+##  [68] &quot;192.168.202.74&quot;                      
+##  [69] &quot;192.168.23.152&quot;                      
+##  [70] &quot;192.168.202.115&quot;                     
+##  [71] &quot;192.168.24.152&quot;                      
+##  [72] &quot;192.168.26.103&quot;                      
+##  [73] &quot;192.168.202.116&quot;                     
+##  [74] &quot;192.168.27.103&quot;                      
+##  [75] &quot;192.168.27.25&quot;                       
+##  [76] &quot;192.168.22.103&quot;                      
+##  [77] &quot;192.168.27.102&quot;                      
+##  [78] &quot;192.168.27.152&quot;                      
+##  [79] &quot;192.168.27.202&quot;                      
+##  [80] &quot;192.168.203.63&quot;                      
+##  [81] &quot;192.168.22.152&quot;                      
+##  [82] &quot;192.168.27.1&quot;                        
+##  [83] &quot;192.168.27.253&quot;                      
+##  [84] &quot;192.168.51.38&quot;                       
+##  [85] &quot;192.168.27.203&quot;                      
+##  [86] &quot;fe80::3e07:54ff:fe41:3ed3&quot;           
+##  [87] &quot;192.168.27.254&quot;                      
+##  [88] &quot;192.168.27.101&quot;                      
+##  [89] &quot;192.168.203.64&quot;                      
+##  [90] &quot;192.168.26.152&quot;                      
+##  [91] &quot;192.168.27.100&quot;                      
+##  [92] &quot;192.168.28.152&quot;                      
+##  [93] &quot;192.168.24.25&quot;                       
+##  [94] &quot;192.168.202.117&quot;                     
+##  [95] &quot;192.168.202.63&quot;                      
+##  [96] &quot;192.168.202.81&quot;                      
+##  [97] &quot;192.168.22.1&quot;                        
+##  [98] &quot;192.168.25.152&quot;                      
+##  [99] &quot;128.244.172.252&quot;                     
+## [100] &quot;192.168.22.253&quot;                      
+## [101] &quot;192.168.22.252&quot;                      
+## [102] &quot;192.168.22.102&quot;                      
+## [103] &quot;192.168.22.254&quot;                      
+## [104] &quot;192.168.22.101&quot;                      
+## [105] &quot;192.168.22.100&quot;                      
+## [106] &quot;192.168.22.25&quot;                       
+## [107] &quot;192.168.25.25&quot;                       
+## [108] &quot;10.10.117.209&quot;                       
+## [109] &quot;192.168.229.252&quot;                     
+## [110] &quot;192.168.28.25&quot;                       
+## [111] &quot;192.168.26.25&quot;                       
+## [112] &quot;192.168.23.25&quot;                       
+## [113] &quot;192.168.202.49&quot;                      
+## [114] &quot;192.168.202.119&quot;                     
+## [115] &quot;192.168.202.118&quot;                     
+## [116] &quot;10.10.117.210&quot;                       
+## [117] &quot;192.168.202.120&quot;                     
+## [118] &quot;fe80::9c8a:5786:bbb0:3db8&quot;           
+## [119] &quot;192.168.0.199&quot;                       
+## [120] &quot;192.168.202.121&quot;                     
+## [121] &quot;172.16.6.57&quot;                         
+## [122] &quot;192.168.202.109&quot;                     
+## [123] &quot;192.168.202.122&quot;                     
+## [124] &quot;192.168.208.18&quot;                      
+## [125] &quot;192.168.202.123&quot;                     
+## [126] &quot;192.168.23.101&quot;                      
+## [127] &quot;192.168.23.103&quot;                      
+## [128] &quot;192.168.23.100&quot;                      
+## [129] &quot;192.168.21.25&quot;                       
+## [130] &quot;169.254.228.26&quot;                      
+## [131] &quot;192.168.229.101&quot;                     
+## [132] &quot;192.168.229.1&quot;                       
+## [133] &quot;192.168.229.156&quot;                     
+## [134] &quot;192.168.229.153&quot;                     
+## [135] &quot;192.168.229.251&quot;                     
+## [136] &quot;192.168.229.254&quot;                     
+## [137] &quot;192.168.25.254&quot;                      
+## [138] &quot;192.168.202.124&quot;                     
+## [139] &quot;2001:dbb:c18:202:4172:3555:4717:3e0c&quot;
+## [140] &quot;2001:dbb:c18:202:d4bc:e39f:84ad:5001&quot;
+## [141] &quot;192.168.28.1&quot;                        
+## [142] &quot;192.168.28.101&quot;                      
+## [143] &quot;192.168.28.253&quot;                      
+## [144] &quot;192.168.28.102&quot;                      
+## [145] &quot;10.10.10.10&quot;                         
+## [146] &quot;192.168.202.125&quot;                     
+## [147] &quot;192.168.28.254&quot;                      
+## [148] &quot;192.168.21.1&quot;                        
+## [149] &quot;192.168.21.100&quot;                      
+## [150] &quot;192.168.21.102&quot;                      
+## [151] &quot;192.168.21.203&quot;                      
+## [152] &quot;192.168.22.202&quot;                      
+## [153] &quot;192.168.22.203&quot;                      
+## [154] &quot;192.168.21.253&quot;                      
+## [155] &quot;192.168.21.202&quot;                      
+## [156] &quot;192.168.21.254&quot;                      
+## [157] &quot;192.168.28.202&quot;                      
+## [158] &quot;192.168.23.1&quot;                        
+## [159] &quot;192.168.23.102&quot;                      
+## [160] &quot;192.168.202.126&quot;                     
+## [161] &quot;fe80::20c:29ff:fe93:571e&quot;            
+## [162] &quot;192.168.23.253&quot;                      
+## [163] &quot;192.168.23.203&quot;                      
+## [164] &quot;192.168.23.202&quot;                      
+## [165] &quot;192.168.23.254&quot;                      
+## [166] &quot;2001:dbb:c18:202:20c:29ff:fe93:571e&quot; 
+## [167] &quot;192.168.202.98&quot;                      
+## [168] &quot;192.168.202.68&quot;                      
+## [169] &quot;192.168.202.128&quot;                     
+## [170] &quot;fe80::62c5:47ff:fe93:381e&quot;           
+## [171] &quot;192.168.202.129&quot;                     
+## [172] &quot;fe80::ba8d:12ff:fe12:3f90&quot;           
+## [173] &quot;192.168.202.4&quot;                       
+## [174] &quot;192.168.202.130&quot;                     
+## [175] &quot;192.168.202.131&quot;                     
+## [176] &quot;192.168.202.132&quot;                     
+## [177] &quot;192.168.202.133&quot;                     
+## [178] &quot;192.168.21.252&quot;                      
+## [179] &quot;192.168.24.1&quot;                        
+## [180] &quot;192.168.25.1&quot;                        
+## [181] &quot;192.168.202.134&quot;                     
+## [182] &quot;fe80::3ed0:f8ff:fe34:4765&quot;           
+## [183] &quot;192.168.24.254&quot;                      
+## [184] &quot;192.168.24.103&quot;                      
+## [185] &quot;192.168.24.252&quot;                      
+## [186] &quot;192.168.202.135&quot;                     
+## [187] &quot;169.254.109.123&quot;                     
+## [188] &quot;192.168.95.166&quot;                      
+## [189] &quot;fe80::423c:fcff:fe06:98a4&quot;           
+## [190] &quot;192.168.202.64&quot;                      
+## [191] &quot;192.168.207.58&quot;                      
+## [192] &quot;192.168.202.137&quot;                     
+## [193] &quot;192.168.202.138&quot;                     
+## [194] &quot;192.168.202.139&quot;                     
+## [195] &quot;192.168.202.140&quot;                     
+## [196] &quot;192.168.203.66&quot;                      
+## [197] &quot;192.168.202.62&quot;                      
+## [198] &quot;fe80::bc5c:15c1:ec81:1e08&quot;           
+## [199] &quot;192.168.202.141&quot;                     
+## [200] &quot;2001:dbb:c18:202:bc5c:15c1:ec81:1e08&quot;
+## [201] &quot;2001:dbb:c18:202:9c6b:be4e:1289:2663&quot;
+## [202] &quot;192.168.0.3&quot;                         
+## [203] &quot;192.168.204.71&quot;                      
+## [204] &quot;192.168.202.67&quot;                      
+## [205] &quot;192.168.202.136&quot;                     
+## [206] &quot;192.168.204.72&quot;                      
+## [207] &quot;192.168.202.143&quot;                     
+## [208] &quot;192.168.202.144&quot;                     
+## [209] &quot;2001:dbb:c18:202:d557:eac5:3728:41ee&quot;
+## [210] &quot;2001:dbb:c18:202:4c3a:e571:4cfc:b70c&quot;
+## [211] &quot;192.168.202.145&quot;                     
+## [212] &quot;128.244.37.196&quot;                      
+## [213] &quot;172.16.10.130&quot;                       
+## [214] &quot;192.168.202.146&quot;                     
+## [215] &quot;fe80::88f4:9f4d:feec:8072&quot;           
+## [216] &quot;192.168.202.147&quot;                     
+## [217] &quot;2001:dbb:c18:202:a1dd:6355:28ae:da1e&quot;
+## [218] &quot;fe80::11a:f507:d853:a03d&quot;            
+## [219] &quot;2001:dbb:c18:202:20c:29ff:fe41:4be7&quot; 
+## [220] &quot;172.16.42.42&quot;                        
+## [221] &quot;192.168.202.240&quot;                     
+## [222] &quot;192.168.202.222&quot;                     
+## [223] &quot;fe80::20c:29ff:fe41:4be7&quot;            
+## [224] &quot;192.168.26.1&quot;                        
+## [225] &quot;192.168.25.100&quot;                      
+## [226] &quot;192.168.25.101&quot;                      
+## [227] &quot;192.168.24.102&quot;                      
+## [228] &quot;192.168.25.102&quot;                      
+## [229] &quot;192.168.25.103&quot;                      
+## [230] &quot;192.168.24.253&quot;                      
+## [231] &quot;192.168.202.148&quot;                     
+## [232] &quot;192.168.25.253&quot;                      
+## [233] &quot;192.168.24.203&quot;                      
+## [234] &quot;192.168.24.202&quot;                      
+## [235] &quot;192.168.23.252&quot;                      
+## [236] &quot;192.168.25.203&quot;                      
+## [237] &quot;192.168.25.202&quot;                      
+## [238] &quot;192.168.26.254&quot;                      
+## [239] &quot;192.168.202.149&quot;                     
+## [240] &quot;192.168.202.150&quot;                     
+## [241] &quot;192.168.100.130&quot;                     
+## [242] &quot;192.168.202.151&quot;                     
+## [243] &quot;192.168.202.152&quot;                     
+## [244] &quot;192.168.202.33&quot;                      
+## [245] &quot;192.168.202.153&quot;                     
+## [246] &quot;192.168.202.154&quot;                     
+## [247] &quot;fe80::216:d3ff:fe4b:70d&quot;             
+## [248] &quot;2001:dbb:c18:202:216:d3ff:fe4b:70d&quot;  
+## [249] &quot;192.168.202.156&quot;                     
+## [250] &quot;fe80::d840:5635:ef48:b032&quot;           
+## [251] &quot;192.168.202.157&quot;                     
+## [252] &quot;2001:dbb:c18:202:6128:bec8:28c6:8c7b&quot;
+## [253] &quot;192.168.202.155&quot;</code></pre>
+<pre class="r"><code>resp_ip&lt;-unique(inf$`resp_ip `)
+all_ip&lt;-merge(orig_ip,resp_ip)
+NROW(unique(all_ip$`x`))</code></pre>
+<pre><code>## [1] 253</code></pre>
 </div>
-<div id="сколько-уникальных-рас-персонажей-species-представлено-в-данных" class="section level2">
-<h2>4.. Сколько уникальных рас персонажей (species) представлено в
-данных?</h2>
-<pre class="r"><code>unique(starwars$species) %&gt;% length()</code></pre>
-<pre><code>## [1] 38</code></pre>
+<div id="какое-соотношение-участников-обмена-внутри-сети-и-участников-обращений-к-внешним-ресурсам" class="section level2">
+<h2>5. Какое соотношение участников обмена внутри сети и участников
+обращений к внешним ресурсам?</h2>
 </div>
-<div id="найти-самого-высокого-персонажа" class="section level2">
-<h2>5. Найти самого высокого персонажа…</h2>
-<pre class="r"><code>starwars[which.max(starwars$height),1]</code></pre>
-<pre><code>## # A tibble: 1 × 1
-##   name       
-##   &lt;chr&gt;      
-## 1 Yarael Poof</code></pre>
+<div id="найдите-топ-10-участников-сети-проявляющих-наибольшую-сетевую-активность." class="section level2">
+<h2>6. Найдите топ-10 участников сети, проявляющих наибольшую сетевую
+активность.</h2>
+<pre class="r"><code>m1&lt;-inf%&gt;%
+count(inf$`orig_ip `,sort=TRUE)
+colnames(m1) &lt;- c(&quot;Person&quot;, &quot;count&quot;)
+m2&lt;-inf%&gt;%
+count(inf$`resp_ip `,sort=TRUE)
+colnames(m2) &lt;- c(&quot;Person&quot;, &quot;count&quot;)
+mm&lt;-rbind(m1,m2)
+mm&lt;-mm %&gt;%
+  group_by(Person) %&gt;%
+  summarise(count)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Person&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>mm&lt;-mm[order(mm$Person, decreasing = TRUE), ]   
+mm</code></pre>
+<pre><code>## # A tibble: 1,483 × 2
+## # Groups:   Person [1,359]
+##    Person                    count
+##    &lt;chr&gt;                     &lt;int&gt;
+##  1 ff02::fb                   3298
+##  2 ff02::1:3                 14411
+##  3 fec0:0:0:ffff::3             44
+##  4 fec0:0:0:ffff::2             47
+##  5 fec0:0:0:ffff::1             47
+##  6 fe80::f2de:f1ff:fe9b:ad6a    30
+##  7 fe80::d840:5635:ef48:b032   276
+##  8 fe80::d69a:20ff:fef9:b49c   141
+##  9 fe80::d69a:20ff:fef9:b49c     2
+## 10 fe80::c62c:3ff:fe37:efc     126
+## # … with 1,473 more rows</code></pre>
 </div>
-<div id="найти-всех-персонажей-ниже-170" class="section level2">
-<h2>6. Найти всех персонажей ниже 170</h2>
-<pre class="r"><code>starwars[which(starwars$height&lt;170),1]</code></pre>
-<pre><code>## # A tibble: 23 × 1
-##    name                 
-##    &lt;chr&gt;                
-##  1 C-3PO                
-##  2 R2-D2                
-##  3 Leia Organa          
-##  4 Beru Whitesun lars   
-##  5 R5-D4                
-##  6 Yoda                 
-##  7 Mon Mothma           
-##  8 Wicket Systri Warrick
-##  9 Nien Nunb            
-## 10 Watto                
-## # … with 13 more rows</code></pre>
+<div id="найдите-топ-10-доменов-к-которым-обращаются-пользователи-сети-и-соответственное-количество-обращений" class="section level2">
+<h2>7. Найдите топ-10 доменов, к которым обращаются пользователи сети и
+соответственное количество обращений</h2>
 </div>
-<div id="подсчитать-имт-индекс-массы-тела-для-всех-персонажей.-имт-подсчитать-по-формуле-𝐼-𝑚h2" class="section level2">
-<h2>7. Подсчитать ИМТ (индекс массы тела) для всех персонажей. ИМТ
-подсчитать по формуле 𝐼 = 𝑚/h^2</h2>
-<p>ℎ2 , где 𝑚 – масса (weight), а ℎ – рост (height).</p>
-<pre class="r"><code>starwars2&lt;-starwars[,c(&quot;name&quot;,&quot;height&quot;,&quot;mass&quot;)]
-vec&lt;-0
-starwars2$index &lt;- vec
-for(i in 1:nrow(starwars2)) {       # for-loop over columns
-  starwars2[i, &quot;index&quot;] = starwars2[ i,&quot;mass&quot;]*10000/(starwars2[i,&quot;height&quot;]*starwars2[i,&quot;height&quot;])
-}
-starwars2</code></pre>
-<pre><code>## # A tibble: 87 × 4
-##    name               height  mass index
-##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Luke Skywalker        172    77  26.0
-##  2 C-3PO                 167    75  26.9
-##  3 R2-D2                  96    32  34.7
-##  4 Darth Vader           202   136  33.3
-##  5 Leia Organa           150    49  21.8
-##  6 Owen Lars             178   120  37.9
-##  7 Beru Whitesun lars    165    75  27.5
-##  8 R5-D4                  97    32  34.0
-##  9 Biggs Darklighter     183    84  25.1
-## 10 Obi-Wan Kenobi        182    77  23.2
-## # … with 77 more rows</code></pre>
+<div id="опеределите-базовые-статистические-характеристики-функция-summary-интервала-времени-между-последовательным-обращениями-к-топ-10-доменам." class="section level2">
+<h2>8. Опеределите базовые статистические характеристики (функция
+summary()) интервала времени между последовательным обращениями к топ-10
+доменам.</h2>
 </div>
-<div id="найти-10-самых-вытянутых-персонажей.-вытянутость-оценить-по-отношению-массы-mass-к-росту" class="section level2">
-<h2>8. Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по
-отношению массы (mass) к росту</h2>
-<p>(height) персонажей.</p>
-<pre class="r"><code>starwars2&lt;-starwars
-starwars3&lt;- starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3[nrow(starwars3) + 1,] = starwars2[which.max(starwars2$height),]
-starwars2&lt;-starwars2[-c(which.max(starwars2$height)),]
-starwars3</code></pre>
-<pre><code>## # A tibble: 10 × 14
-##    name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##    &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
-##  1 Yarael Poof    264    NA none    white   yellow     NA   male  mascu… Quermia
-##  2 Tarfful        234   136 brown   brown   blue       NA   male  mascu… Kashyy…
-##  3 Lama Su        229    88 none    grey    black      NA   male  mascu… Kamino 
-##  4 Chewbacca      228   112 brown   unknown blue      200   male  mascu… Kashyy…
-##  5 Roos Tarpa…    224    82 none    grey    orange     NA   male  mascu… Naboo  
-##  6 Grievous       216   159 none    brown,… green,…    NA   male  mascu… Kalee  
-##  7 Taun We        213    NA none    grey    black      NA   fema… femin… Kamino 
-##  8 Rugor Nass     206    NA none    green   orange     NA   male  mascu… Naboo  
-##  9 Tion Medon     206    80 none    grey    black      NA   male  mascu… Utapau 
-## 10 Darth Vader    202   136 none    white   yellow     41.9 male  mascu… Tatooi…
-## # … with 4 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
-## #   starships &lt;list&gt;, and abbreviated variable names ¹​hair_color, ²​skin_color,
-## #   ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
+<div id="часто-вредоносное-программное-обеспечение-использует-dns-канал-в-качестве-канала-управления-периодически-отправляя-запросы-на-подконтрольный-злоумышленникам-dns-сервер.-по-периодическим-запросам-на-один-и-тот-же-домен-можно-выявить-скрытый-dns-канал.-есть-ли-такие-ip-адреса-в-исследуемом-датасете" class="section level2">
+<h2>9. Часто вредоносное программное обеспечение использует DNS канал в
+качестве канала управления, периодически отправляя запросы на
+подконтрольный злоумышленникам DNS сервер. По периодическим запросам на
+один и тот же домен можно выявить скрытый DNS канал. Есть ли такие IP
+адреса в исследуемом датасете?</h2>
 </div>
-<div id="найти-средний-возраст-персонажей-каждой-расы-вселенной-звездных-войн." class="section level2">
-<h2>9. Найти средний возраст персонажей каждой расы вселенной Звездных
-войн.</h2>
-<pre class="r"><code>starwars %&gt;%
-  filter(!(birth_year %in% NA)) %&gt;% 
-  filter(!(species %in% NA)) %&gt;%
-  group_by(species) %&gt;%
-  summarise(mean_age = mean(birth_year)) </code></pre>
-<pre><code>## # A tibble: 15 × 2
-##    species        mean_age
-##    &lt;chr&gt;             &lt;dbl&gt;
-##  1 Cerean             92  
-##  2 Droid              53.3
-##  3 Ewok                8  
-##  4 Gungan             52  
-##  5 Human              53.4
-##  6 Hutt              600  
-##  7 Kel Dor            22  
-##  8 Mirialan           49  
-##  9 Mon Calamari       41  
-## 10 Rodian             44  
-## 11 Trandoshan         53  
-## 12 Twi&#39;lek            48  
-## 13 Wookiee           200  
-## 14 Yoda&#39;s species    896  
-## 15 Zabrak             54</code></pre>
-</div>
-<div id="найти-самый-распространенный-цвет-глаз-персонажей-вселенной-звездных-войн." class="section level2">
-<h2>10. Найти самый распространенный цвет глаз персонажей вселенной
-Звездных войн.</h2>
-<pre class="r"><code>starwars%&gt;%
-count(eye_color,sort=TRUE)%&gt;%
-head(1)</code></pre>
-<pre><code>## # A tibble: 1 × 2
-##   eye_color     n
-##   &lt;chr&gt;     &lt;int&gt;
-## 1 brown        21</code></pre>
-</div>
-<div id="подсчитать-среднюю-длину-имени-в-каждой-расе-вселенной-звездных-войн." class="section level2">
-<h2>11. Подсчитать среднюю длину имени в каждой расе вселенной Звездных
-войн.</h2>
-<pre class="r"><code>starwars %&gt;%
-  filter(!(birth_year %in% NA)) %&gt;% 
-  filter(!(species %in% NA)) %&gt;%
-  group_by(species) %&gt;%
-  summarise(mean_name = mean(nchar(name)))</code></pre>
-<pre><code>## # A tibble: 15 × 2
-##    species        mean_name
-##    &lt;chr&gt;              &lt;dbl&gt;
-##  1 Cerean              12  
-##  2 Droid                5  
-##  3 Ewok                21  
-##  4 Gungan              13  
-##  5 Human               12.1
-##  6 Hutt                21  
-##  7 Kel Dor              8  
-##  8 Mirialan            14  
-##  9 Mon Calamari         6  
-## 10 Rodian               6  
-## 11 Trandoshan           5  
-## 12 Twi&#39;lek             11  
-## 13 Wookiee              9  
-## 14 Yoda&#39;s species       4  
-## 15 Zabrak              10</code></pre>
+<div id="обогащение-данных-10.-определите-местоположение-страну-город-и-организацию-провайдера-для-топ-10-доменов.-для-этого-можно-использовать-сторонние-сервисы-например-httpsv4.ifconfig.co." class="section level2">
+<h2>Обогащение данных 10. Определите местоположение (страну, город) и
+организацию-провайдера для топ-10 доменов. Для этого можно использовать
+сторонние сервисы, например <a href="https://v4.ifconfig.co/" class="uri">https://v4.ifconfig.co/</a>.</h2>
 </div>
 
 
