@@ -7,7 +7,7 @@ date: "2022-11-02"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Подготовка данных 1. Импортируйте данные DNS
+## Подготовка данных 1.. Импортируйте данные DNS
 ```{r}
 library(dplyr)
 inf = read.csv("dns.log", header = FALSE,sep = "\t",encoding = "UTF-8")
