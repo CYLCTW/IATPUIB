@@ -16,11 +16,11 @@ inf = read.csv("dns.log", header = FALSE,sep = "\t",encoding = "UTF-8")
 ## 2. Добавьте пропущенные данные о структуре данных (назначении столбцов)
 ```{r}
 head=read.csv("header.csv", header = TRUE)
-head
+
 field<-head[,1]
 inf = read.csv("dns.log", header = FALSE,sep = "\t",encoding = "UTF-8")
 names(inf)<-field
-inf
+
 ```
 
 ## 3. Преобразуйте данные в столбцах в нужный формат
@@ -31,7 +31,6 @@ inf
 ## Анализ 4. Сколько участников информационного обмена в сети Доброй Организации?
 ```{r}
 orig_ip<-unique(inf$`orig_ip `)
-orig_ip
 resp_ip<-unique(inf$`resp_ip `)
 all_ip<-merge(orig_ip,resp_ip)
 NROW(unique(all_ip$`x`))
