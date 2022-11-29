@@ -1,0 +1,137 @@
+---
+title: "Lab4"
+output: html_document
+date: "2022-11-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+
+
+
+## 1. Сколько встроенных в пакет nycflights13 датафреймов?
+```{r}
+library(dplyr)
+a<-nycflights13::airlines
+b<-nycflights13::airports
+c<-nycflights13::flights
+d<-nycflights13::planes
+e<-nycflights13::weather
+list<-list(a,b,c,d,e )
+list[1]
+list[2]
+list[3]
+list[4]
+list[5]
+
+length(list)
+
+```
+
+## 2. Сколько строк в каждом датафрейме?
+```{r}
+df<-as.data.frame(list[1])
+df%>% nrow()
+df<-as.data.frame(list[2])
+df%>% nrow()
+df<-as.data.frame(list[3])
+df%>% nrow()
+df<-as.data.frame(list[4])
+df%>% nrow()
+df<-as.data.frame(list[5])
+df%>% nrow()
+```
+
+## 3. Сколько столбцов в каждом датафрейме?
+
+```{r}
+df<-as.data.frame(list[1])
+df%>% ncol()
+df<-as.data.frame(list[2])
+df%>% ncol()
+df<-as.data.frame(list[3])
+df%>% ncol()
+df<-as.data.frame(list[4])
+df%>% ncol()
+df<-as.data.frame(list[5])
+df%>% ncol()
+```
+
+## 4. Как просмотреть примерный вид датафрейма?
+
+```{r}
+df<-as.data.frame(list[1])
+df%>% glimpse()
+df<-as.data.frame(list[2])
+df%>% glimpse()
+df<-as.data.frame(list[3])
+df%>% glimpse()
+df<-as.data.frame(list[4])
+df%>% glimpse()
+df<-as.data.frame(list[5])
+df%>% glimpse()
+```
+
+## 5. Сколько компаний-перевозчиков (carrier) учитывают эти наборы данных (представлено в наборах данных)?
+
+```{r}
+df<-as.data.frame(list[1])
+length(unique(df$carrier))
+```
+
+## 6. Сколько рейсов принял аэропорт John F Kennedy Intl в мае?
+
+
+```{r}
+df<-as.data.frame(list[2])
+df2<-as.data.frame(list[3])
+airport<-"John F Kennedy Intl"
+airport<-df[which(df$name==airport),1]
+month<-5
+df2[which(df2$dest==airport & df2$month==month),1]
+```
+
+## 7. Какой самый северный аэропорт?
+
+
+```{r}
+
+```
+
+## 8. Какой аэропорт самый высокогорный (находится выше всех над уровнем моря)?
+```{r}
+
+```
+
+## 9. Какие бортовые номера у самых старых самолетов?
+```{r}
+
+```
+
+## 10. Какая средняя температура воздуха была в сентябре в аэропорту John F Kennedy Intl (в градусах Цельсия).
+```{r}
+
+```
+
+## 11. Самолеты какой авиакомпании совершили больше всего вылетов в июне?
+
+```{r}
+
+```
+
+## 12. Самолеты какой авиакомпании задерживались чаще других в 2013 году?
+
+```{r}
+
+```
+
+## 13. Оформить отчет в соответствии с шаблоном
+
+```{r}
+
+```
