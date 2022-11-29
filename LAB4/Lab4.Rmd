@@ -93,29 +93,46 @@ df2<-as.data.frame(list[3])
 airport<-"John F Kennedy Intl"
 airport<-df[which(df$name==airport),1]
 month<-5
-df2[which(df2$dest==airport & df2$month==month),1]
+df2<-df2[which(df2$dest==airport & df2$month==month),1]
+length(df2)
 ```
 
 ## 7. Какой самый северный аэропорт?
 
 
 ```{r}
-
+df<-as.data.frame(list[2])
+airport<-df[which.max(df$lat),2]
+airport
 ```
 
 ## 8. Какой аэропорт самый высокогорный (находится выше всех над уровнем моря)?
 ```{r}
-
+df<-as.data.frame(list[2])
+airport2<-df[which.max(df$alt),2]
+airport2
 ```
 
 ## 9. Какие бортовые номера у самых старых самолетов?
 ```{r}
-
+df<-as.data.frame(list[4])
+df<-df[,c("tailnum","year")]
+df<-df[order(df$year),]
+df<-df%>%head(10)
+for(i in 1:nrow(df))
+  df[ i, 2] <- 2022-df[ i, 2]
+colnames(df) <- c("Number", "Age")
+df
 ```
 
 ## 10. Какая средняя температура воздуха была в сентябре в аэропорту John F Kennedy Intl (в градусах Цельсия).
 ```{r}
-
+df<-as.data.frame(list[5])
+df<-df[which(df$origin==airport & df$month==9),]
+df<-df[,c("origin","month","temp")]
+for(i in 1:nrow(df))
+  df[ i, 3] <- 5/9*(df[ i, 3]-32)
+df%>%summarise(mean_temp = mean(temp))
 ```
 
 ## 11. Самолеты какой авиакомпании совершили больше всего вылетов в июне?
