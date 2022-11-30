@@ -138,17 +138,26 @@ df%>%summarise(mean_temp = mean(temp))
 ## 11. Самолеты какой авиакомпании совершили больше всего вылетов в июне?
 
 ```{r}
-
+df<-as.data.frame(list[3])
+df<-df[,c("tailnum","month")]
+df<-df[which(df$month==6),]
+df<-df%>%group_by(df$tailnum)
+df2<-as.data.frame(list[4])
+df<-merge(df, df2)
+df<-df[,c("tailnum","manufacturer")]
+df<-df%>%count(manufacturer,sort=TRUE)
+df%>%head(1)
 ```
 
 ## 12. Самолеты какой авиакомпании задерживались чаще других в 2013 году?
 
 ```{r}
-
-```
-
-## 13. Оформить отчет в соответствии с шаблоном
-
-```{r}
-
+df<-as.data.frame(list[3])
+df<-df[,c("tailnum","year","dep_delay")]
+df<-df[which(df$year==2013 & df$dep_delay>0),]
+df2<-as.data.frame(list[4])
+df<-merge(df, df2)
+df[,c("tailnum","manufacturer")]
+df<-df%>%count(manufacturer,sort=TRUE)
+df%>%head(1)
 ```

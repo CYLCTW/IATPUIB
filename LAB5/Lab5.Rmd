@@ -20,7 +20,7 @@ head=read.csv("header.csv", header = TRUE)
 field<-head[,1]
 inf = read.csv("dns.log", header = FALSE,sep = "\t",encoding = "UTF-8")
 names(inf)<-field
-
+inf
 ```
 
 ## 3. Преобразуйте данные в столбцах в нужный формат
@@ -43,7 +43,8 @@ m52<-unique(inf$`resp_ip `,sort=TRUE)
 new_vector <- c(m51, m52)
 new_vector<-new_vector[!duplicated(new_vector)]
 lall=length(new_vector)
-l1=length(unique(grep(paste("192.168",collapse="|"), 
+toMatch <- c("192.168", "fe80")
+l1=length(unique(grep(paste(toMatch,collapse="|"), 
                         new_vector, value=TRUE)))
 l2=lall-l1
 contr=l1/l2
@@ -84,6 +85,13 @@ m7head%>%summary()
 
 ## 9. Часто вредоносное программное обеспечение использует DNS канал в качестве канала управления, периодически отправляя запросы на подконтрольный злоумышленникам DNS сервер. По периодическим запросам на один и тот же домен можно выявить скрытый DNS канал. Есть ли такие IP адреса в исследуемом датасете?
 ```{r}
+ms<-inf[,c("orig_ip ","query ")]
+m8<-ms
+m8%>%group_by(m8$`query `)
+m8<-m8%>%group_by(m8$orig_ip ) %>%count(m8$`query `,sort=TRUE)
+m8<-m8%>%count(m8$`m8$orig_ip`,)
+m8<-m8[which(m8$n==1),]
+m8[,c('m8$orig_ip')]
 
 ```
 
