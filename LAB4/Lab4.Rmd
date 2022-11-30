@@ -157,7 +157,7 @@ df<-df[,c("tailnum","year","dep_delay")]
 df<-df[which(df$year==2013 & df$dep_delay>0),]
 df2<-as.data.frame(list[4])
 df<-merge(df, df2)
-df[,c("tailnum","manufacturer")]
+df<-df[,c("tailnum","manufacturer")]
 df<-df%>%count(manufacturer,sort=TRUE)
 df%>%head(1)
 ```
