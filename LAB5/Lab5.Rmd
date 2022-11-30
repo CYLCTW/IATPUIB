@@ -36,14 +36,14 @@ all_ip<-merge(orig_ip,resp_ip)
 NROW(unique(all_ip$`x`))
 ```
 
-## 5. Какое соотношение участников обмена внутри сети и участников обращений к внешним ресурсам?count(inf[grep("192.168.202.87",inf)])
+## 5. Какое соотношение участников обмена внутри сети и участников обращений к внешним ресурсам?
 ```{r}
 m51<-unique(inf$`orig_ip `,sort=TRUE)
 m52<-unique(inf$`resp_ip `,sort=TRUE)
 new_vector <- c(m51, m52)
 new_vector<-new_vector[!duplicated(new_vector)]
 lall=length(new_vector)
-toMatch <- c("192.168", "fe80")
+toMatch <- c("(192.168.)([0-9]{1,3}[.])[0-9]{1,3}","(10.0.)([0-9]{1,3}[.])[0-9]{1,3}","(100.64.)([0-9]{1,3}[.])[0-9]{1,3}","(172.16.)([0-9]{1,3}[.])[0-9]{1,3}")
 l1=length(unique(grep(paste(toMatch,collapse="|"), 
                         new_vector, value=TRUE)))
 l2=lall-l1
